@@ -20,7 +20,7 @@ services:
     restart: on-failure
 
   agent:
-    image: my-jenkins/ssh-agent:5.34.0-jdk17
+    image: my-jenkins/ssh-agent
     build:
       context: .
       dockerfile: Dockerfile

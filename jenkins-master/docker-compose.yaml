@@ -22,7 +22,7 @@ services:
     restart: on-failure
 
   controller:
-    image: my-jenkins/jenkins:2.457-jdk17
+    image: my-jenkins/jenkins
     build:
       context: .
       dockerfile: Dockerfile
