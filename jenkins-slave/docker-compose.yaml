@@ -1,0 +1,56 @@
+# This configuration supports basic configuration using environment variables or an .env file
+# The following variables are supported:
+#
+# JENKINS_HOME                 - Jenkins home directory in conatiner
+#
+---
+services:
+  dind:
+    image: docker:26.1.2-dind-rootless
+    volumes:
+      - ${JENKINS_HOME:-./jenkins_home}:/home/jenkins
+      - jenkins_docker_certs:/certs/client
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    networks:
+      dind_network:
+        aliases:
+          - docker
+    privileged: true
+    restart: on-failure
+
+  agent:
+    image: my-jenkins/ssh-agent:5.34.0-jdk17
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ${JENKINS_HOME:-./jenkins_home}:/home/jenkins
+      - jenkins_docker_certs:/certs/client:ro
+      - jenkins_tmp:/tmp
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: 1
+      JENKINS_AGENT_SSH_PUBKEY: ${JENKINS_AGENT_SSH_PUBKEY}
+    networks:
+      - dind_network
+    ports:
+      - 22222:22
+    restart: on-failure
+    depends_on:
+      dind:
+        condition: service_started
+
+volumes:
+  jenkins_tmp:
+    driver: local
+    driver_opts:
+      device: "tmpfs"
+      type: "tmpfs"
+      o: "size=3000m,uid=1000"
+  jenkins_docker_certs:
+    driver: local
+
+networks:
+  dind_network:

@@ -1,0 +1,59 @@
+# This configuration supports basic configuration using environment variables or an .env file
+# The following variables are supported:
+#
+# JENKINS_HOME                 - Jenkins home directory in conatiner
+#
+# JENKINS_BACKUP               - Jenkins ThinBackup Location
+#
+---
+services:
+  dind:
+    image: docker:26.1.2-dind-rootless
+    volumes:
+      - ${JENKINS_HOME:-./jenkins_home}:/var/jenkins_home
+      - jenkins_docker_certs:/certs/client
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    networks:
+      dind-network:
+        aliases:
+          - docker
+    privileged: true
+    restart: on-failure
+
+  controller:
+    image: my-jenkins/jenkins:2.457-jdk17
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ${JENKINS_HOME:-./jenkins_home}:/var/jenkins_home
+      - ${JENKINS_BACKUP:-./jenkins_backup}:/jenkins_backup
+      - jenkins_docker_certs:/certs/client:ro
+      - jenkins_tmp:/tmp
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: 1
+    networks:
+      - dind-network
+    ports:
+      - 8080:8080
+      - 50000:50000
+    restart: on-failure
+    depends_on:
+      dind:
+        condition: service_started
+
+volumes:
+  jenkins_tmp:
+    driver: local
+    driver_opts:
+      device: "tmpfs"
+      type: "tmpfs"
+      o: "size=3000m,uid=1000"
+  jenkins_docker_certs:
+    driver: local
+
+networks:
+  dind-network:
