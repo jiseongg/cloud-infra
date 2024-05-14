@@ -15,7 +15,7 @@ services:
     environment:
       DOCKER_TLS_CERTDIR: /certs
     networks:
-      dind-network:
+      dind_network:
         aliases:
           - docker
     privileged: true
@@ -36,7 +36,7 @@ services:
       DOCKER_CERT_PATH: /certs/client
       DOCKER_TLS_VERIFY: 1
     networks:
-      - dind-network
+      - dind_network
     ports:
       - 8080:8080
       - 50000:50000
@@ -51,9 +51,9 @@ volumes:
     driver_opts:
       device: "tmpfs"
       type: "tmpfs"
-      o: "size=3000m,uid=1000"
+      o: "size=2000m,uid=1000"
   jenkins_docker_certs:
     driver: local
 
 networks:
-  dind-network:
+  dind_network:

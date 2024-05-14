@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 
-if [[ -z $JENKINS_AGENT_SSH_PUBKEY ]]; then
-  echo "JENKINS_AGENT_SSH_PUBKEY should be set!"
-  exit 1
-fi
-
 script_dir=$(cd $(dirname $0); pwd)
 script_dir_name=$(basename $script_dir)
 
-docker compose up -d
+if [[ -z $JENKINS_AGENT_SSH_PUBKEY ]]; then
+  if [[ ! -f $script_dir/.env ]]; then 
+    echo "JENKINS_AGENT_SSH_PUBKEY should be set!"
+    exit 1
+  else
+    echo "$script_dir/.env exists. Use this file..."
+  fi
+fi
 
 echo "JENKINS_AGENT_SSH_PUBKEY='$JENKINS_AGENT_SSH_PUBKEY'" > $script_dir/.env
+
+docker compose up -d
 
 while : ; do
   dind_status=$(docker inspect ${script_dir_name}-agent-1 --format "{{.State.Status}}")

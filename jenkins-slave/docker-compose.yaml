@@ -48,7 +48,7 @@ volumes:
     driver_opts:
       device: "tmpfs"
       type: "tmpfs"
-      o: "size=3000m,uid=1000"
+      o: "size=2000m,uid=1000"
   jenkins_docker_certs:
     driver: local
 
