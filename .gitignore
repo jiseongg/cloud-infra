@@ -77,3 +77,5 @@ jenkins_backup
 
 .env
 .env.bak
+
+jenkins_certs

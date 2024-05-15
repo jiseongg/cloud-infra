@@ -30,6 +30,7 @@ services:
       - ${JENKINS_HOME:-./jenkins_home}:/var/jenkins_home
       - ${JENKINS_BACKUP:-./jenkins_backup}:/jenkins_backup
       - jenkins_docker_certs:/certs/client:ro
+      - ./jenkins_certs:/jenkins_certs
       - jenkins_tmp:/tmp
     environment:
       DOCKER_HOST: tcp://docker:2376
@@ -44,6 +45,11 @@ services:
     depends_on:
       dind:
         condition: service_started
+    command:
+      - "--httpPort=-1"
+      - "--httpsPort=8080"
+      - "--httpsKeyStore=/jenkins_certs/jenkins.jks"
+      - "--httpsKeyStorePassword=${JKS_PASSWORD}"
 
 volumes:
   jenkins_tmp:
