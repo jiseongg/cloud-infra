@@ -18,6 +18,7 @@ services:
         aliases:
           - docker
     privileged: true
+    init: true
     restart: on-failure
 
   agent:
