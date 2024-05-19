@@ -3,8 +3,6 @@
 #
 # JENKINS_HOME                 - Jenkins home directory in conatiner
 #
-# JENKINS_BACKUP               - Jenkins ThinBackup Location
-#
 ---
 services:
   dind:
@@ -30,7 +28,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ${JENKINS_HOME:-./jenkins_home}:/var/jenkins_home
-      - ${JENKINS_BACKUP}:/jenkins_backup
+      - ${HOME}/jenkins_backup:/jenkins_backup
       - ./jenkins_certs:/jenkins_certs
       - jenkins_docker_certs:/certs/client:ro
       - jenkins_tmp:/tmp

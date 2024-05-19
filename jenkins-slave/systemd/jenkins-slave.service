@@ -1,0 +1,19 @@
+[Unit]
+Description=jenkins-slave
+After=network.target
+
+[Service]
+User=ec2-user
+Type=oneshot
+
+# Replace path to scripts if needed
+WorkingDirectory=/home/ec2-user/jenkins-operation/jenkins-slave
+ExecStartPre=mv /home/ec2-user/jenkins-operation/jenkins-slave/.env.bak /home/ec2-user/jenkins-operation/jenkins-slave/.env
+ExecStart=/home/ec2-user/jenkins-operation/jenkins-slave/up.sh
+ExecStop=/home/ec2-user/jenkins-operation/jenkins-slave/down.sh
+
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target

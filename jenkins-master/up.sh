@@ -19,7 +19,5 @@ if [[ ! -d ${HOME}/jenkins_backup ]]; then
   mkdir ${HOME}/jenkins_backup
 fi
 
-echo "JENKINS_BACKUP='${HOME}/jenkins_backup'" >> $script_dir/.env
-
 docker compose up -d
 
