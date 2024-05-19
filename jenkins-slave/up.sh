@@ -12,7 +12,9 @@ if [[ -z $JENKINS_AGENT_SSH_PUBKEY ]]; then
   fi
 fi
 
-echo "JENKINS_AGENT_SSH_PUBKEY='$JENKINS_AGENT_SSH_PUBKEY'" > $script_dir/.env
+if [[ ! -f $script_dir/.env ]]; then 
+  echo "JENKINS_AGENT_SSH_PUBKEY='$JENKINS_AGENT_SSH_PUBKEY'" > $script_dir/.env
+fi
 
 docker compose up -d
 
