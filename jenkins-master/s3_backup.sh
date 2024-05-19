@@ -39,6 +39,6 @@ fi
 
 echo "Synchronizing $backup_tgz_directory with S3"
 s3_target_directory=$(basename $thinbackup_directory)
-aws s3 sync $backup_tgz_directory s3://$s3_bucket_name/$s3_target_directory/
+aws s3 sync --delete $backup_tgz_directory s3://$s3_bucket_name/$s3_target_directory/
 
 rm -rf $backup_tgz_directory
