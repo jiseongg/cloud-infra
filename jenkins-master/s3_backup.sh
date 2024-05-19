@@ -22,11 +22,23 @@ else
   fi
 fi
 
-latest_backup=$(ls -t $thinbackup_directory | head -n 1)
-latest_backup_full_path="$thinbackup_directory/$latest_backup"
-latest_backup_tgz="$latest_backup.tar.gz"
-tar zcvf /tmp/$latest_backup_tgz $latest_backup_full_path
+backup_tgz_directory="/tmp/thin_backup"
+if [[ ! -d $backup_tgz_directory ]]; then
+  mkdir $backup_tgz_directory
+fi
 
+(
+  cd $thinbackup_directory
+  for backup in $(ls); do
+    echo "Compressing $backup"
+    backup_tgz="$backup.tar.gz"
+    tar zcf $backup_tgz_directory/$backup_tgz $backup
+  done
+)
+  
+
+echo "Synchronizing $backup_tgz_directory with S3"
 s3_target_directory=$(basename $thinbackup_directory)
+aws s3 sync $backup_tgz_directory s3://$s3_bucket_name/$s3_target_directory/
 
-aws s3 mv /tmp/$latest_backup_tgz s3://$s3_bucket_name/$s3_target_directory/
+rm -rf $backup_tgz_directory
