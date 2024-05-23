@@ -79,3 +79,6 @@ jenkins_backup
 .env.bak
 
 jenkins_certs
+
+# nginx
+nginx-log
