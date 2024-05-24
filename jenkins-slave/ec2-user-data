@@ -5,10 +5,10 @@ sudo yum update -y
 sudo yum install -y git docker 
 
 # setup docker
-sudo systemctl enable docker
-sudo gpasswd -a ec2-user docker
+usermod -a -G docker ec2-user
 newgrp docker
-sudo systemctl restart docker
+sudo systemctl start docker
+sudo systemctl enable docker
 
 # docker compose
 DOCKER_CONFIG=/home/ec2-user/.docker

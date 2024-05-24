@@ -6,10 +6,10 @@ sudo yum install -y \
   git docker java-17-amazon-corretto-headless.x86_64
 
 # setup docker
-sudo systemctl enable docker
-sudo gpasswd -a ec2-user docker
+usermod -a -G docker ec2-user
 newgrp docker
-sudo systemctl restart docker
+sudo systemctl start docker
+sudo systemctl enable docker
 
 # docker compose
 DOCKER_CONFIG=/home/ec2-user/.docker
@@ -18,6 +18,3 @@ curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-comp
   -o $DOCKER_CONFIG/cli-plugins/docker-compose
 chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
 
-# change timezone
-ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
-export LANG=en_US.UTF-8
