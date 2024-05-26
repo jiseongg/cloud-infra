@@ -1,4 +1,4 @@
-FROM jenkins/ssh-agent:5.34.0-jdk17
+FROM jenkins/ssh-agent:5.38.0-jdk17
 
 RUN apt-get update && apt-get install -y lsb-release curl
 RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
