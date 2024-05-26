@@ -10,9 +10,7 @@ if [[ -z $JENKINS_AGENT_SSH_PUBKEY ]]; then
   else
     echo "$script_dir/.env exists. Use this file..."
   fi
-fi
-
-if [[ ! -f $script_dir/.env ]]; then 
+else
   echo "JENKINS_AGENT_SSH_PUBKEY='$JENKINS_AGENT_SSH_PUBKEY'" > $script_dir/.env
 fi
 
