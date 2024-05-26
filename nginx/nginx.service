@@ -1,0 +1,18 @@
+[Unit]
+Description=nginx-docker
+After=network.target
+
+[Service]
+User=ec2-user
+Type=oneshot
+
+# Replace path to scripts if needed
+WorkingDirectory=/home/ec2-user/cloud-infra/nginx
+ExecStart=/home/ec2-user/cloud-infra/nginx/up.sh
+ExecStop=/home/ec2-user/cloud-infra/nginx/down.sh
+
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
