@@ -7,10 +7,9 @@ User=ec2-user
 Type=oneshot
 
 # Replace path to scripts if needed
-WorkingDirectory=/home/ec2-user/jenkins-operation/jenkins-slave
-ExecStartPre=/usr/bin/mv /home/ec2-user/jenkins-operation/jenkins-slave/.env.bak /home/ec2-user/jenkins-operation/jenkins-slave/.env
-ExecStart=/home/ec2-user/jenkins-operation/jenkins-slave/up.sh
-ExecStop=/home/ec2-user/jenkins-operation/jenkins-slave/down.sh
+WorkingDirectory=/home/ec2-user/cloud-infra/devops/jenkins/jenkins-slave
+ExecStart=/home/ec2-user/cloud-infra/devops/jenkins/jenkins-slave/up.sh
+ExecStop=/home/ec2-user/cloud-infra/devops/jenkins/jenkins-slave/down.sh
 
 RemainAfterExit=true
 StandardOutput=journal

@@ -7,10 +7,9 @@ User=ec2-user
 Type=oneshot
 
 # Replace path to scripts if needed
-WorkingDirectory=/home/ec2-user/jenkins-operation/jenkins-master
-ExecStartPre=/usr/bin/mv /home/ec2-user/jenkins-operation/jenkins-master/.env.bak /home/ec2-user/jenkins-operation/jenkins-master/.env
-ExecStart=/home/ec2-user/jenkins-operation/jenkins-master/up.sh
-ExecStop=/home/ec2-user/jenkins-operation/jenkins-master/down.sh
+WorkingDirectory=/home/ec2-user/cloud-infra/devops/jenkins/jenkins-master
+ExecStart=/home/ec2-user/cloud-infra/devops/jenkins/jenkins-master/up.sh
+ExecStop=/home/ec2-user/cloud-infra/devops/jenkins/jenkins-master/down.sh
 
 RemainAfterExit=true
 StandardOutput=journal

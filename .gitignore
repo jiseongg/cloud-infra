@@ -76,9 +76,6 @@ jenkins_home
 jenkins_backup
 
 .env
-.env.bak
-
-jenkins_certs
 
 # nginx
 nginx-log

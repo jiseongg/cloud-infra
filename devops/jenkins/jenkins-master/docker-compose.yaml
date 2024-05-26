@@ -46,11 +46,6 @@ services:
     depends_on:
       dind:
         condition: service_started
-    command:
-      - "--httpPort=-1"
-      - "--httpsPort=8080"
-      - "--httpsKeyStore=/jenkins_certs/jenkins.jks"
-      - "--httpsKeyStorePassword=${JKS_PASSWORD}"
 
 volumes:
   jenkins_tmp:
