@@ -29,7 +29,6 @@ services:
     volumes:
       - ${JENKINS_HOME:-./jenkins_home}:/var/jenkins_home
       - ${HOME}/jenkins_backup:/jenkins_backup
-      - ./jenkins_certs:/jenkins_certs
       - jenkins_docker_certs:/certs/client:ro
       - jenkins_tmp:/tmp
     environment:
