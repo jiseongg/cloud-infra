@@ -18,3 +18,4 @@ curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-comp
   -o $DOCKER_CONFIG/cli-plugins/docker-compose
 chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
 
+sudo chown -R ec2-user:ec2-user $DOCKER_CONFIG
